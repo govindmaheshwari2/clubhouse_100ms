@@ -1,22 +1,16 @@
-import 'package:clubhouse_clone/enum/meeting_flow.dart';
-import 'package:clubhouse_clone/meeting/meeting_controller.dart';
 import 'package:clubhouse_clone/meeting/meeting_store.dart';
-import 'package:clubhouse_clone/models/user.dart';
 import 'package:clubhouse_clone/views/chat_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
 class RoomView extends StatefulWidget {
   final String roomTitle;
   final String roomId;
-  final User user;
+  final String username;
   const RoomView(
       {required this.roomTitle,
       required this.roomId,
-      required this.user,
+      required this.username,
       Key? key})
       : super(key: key);
 
@@ -31,25 +25,18 @@ class _RoomViewState extends State<RoomView> {
   @override
   void initState() {
     super.initState();
-    _meetingStore = context.read<MeetingStore>();
-    MeetingController meetingController = MeetingController(
-        roomUrl: widget.roomId, flow: MeetingFlow.join, user: widget.user);
-    _meetingStore.meetingController = meetingController;
+    _meetingStore = MeetingStore();
 
     initMeeting();
   }
 
   initMeeting() async {
-    bool ans = await _meetingStore.joinMeeting();
+    bool ans = await _meetingStore.join(widget.username, widget.roomId);
     if (!ans) {
+      const SnackBar(content: Text("Unable to Join"));
       Navigator.of(context).pop();
     }
-    _meetingStore.startListen();
-    if (widget.user.userRole == 'listener') {
-      if (_meetingStore.isMicOn) {
-        _meetingStore.toggleAudio();
-      }
-    }
+    _meetingStore.addUpdateListener();
   }
 
   @override
@@ -110,7 +97,7 @@ class _RoomViewState extends State<RoomView> {
                                   style: const TextStyle(fontSize: 20),
                                 ),
                                 Text(
-                                  filteredList[index].role!.name,
+                                  filteredList[index].role.name,
                                   style: const TextStyle(fontSize: 14),
                                 ),
                               ],
@@ -134,7 +121,7 @@ class _RoomViewState extends State<RoomView> {
                           borderRadius: BorderRadius.circular(15)),
                     ),
                     onPressed: () {
-                      _meetingStore.meetingController.leaveMeeting();
+                      _meetingStore.leave();
                       Navigator.pop(context);
                     },
                     child: const Text(
@@ -149,7 +136,7 @@ class _RoomViewState extends State<RoomView> {
                           padding: EdgeInsets.zero,
                           shape: const CircleBorder()),
                       onPressed: () {
-                        _meetingStore.toggleAudio();
+                        _meetingStore.switchAudio();
                       },
                       child: Icon(
                           _meetingStore.isMicOn ? Icons.mic : Icons.mic_off));

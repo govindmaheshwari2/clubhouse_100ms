@@ -24,18 +24,18 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
     });
   }
 
-  final _$errorAtom = Atom(name: 'MeetingStoreBase.error');
+  final _$hmsExceptionAtom = Atom(name: 'MeetingStoreBase.hmsException');
 
   @override
-  HMSError? get error {
-    _$errorAtom.reportRead();
-    return super.error;
+  HMSException? get hmsException {
+    _$hmsExceptionAtom.reportRead();
+    return super.hmsException;
   }
 
   @override
-  set error(HMSError? value) {
-    _$errorAtom.reportWrite(value, super.error, () {
-      super.error = value;
+  set hmsException(HMSException? value) {
+    _$hmsExceptionAtom.reportWrite(value, super.hmsException, () {
+      super.hmsException = value;
     });
   }
 
@@ -68,21 +68,6 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
   set isMeetingStarted(bool value) {
     _$isMeetingStartedAtom.reportWrite(value, super.isMeetingStarted, () {
       super.isMeetingStarted = value;
-    });
-  }
-
-  final _$isVideoOnAtom = Atom(name: 'MeetingStoreBase.isVideoOn');
-
-  @override
-  bool get isVideoOn {
-    _$isVideoOnAtom.reportRead();
-    return super.isVideoOn;
-  }
-
-  @override
-  set isVideoOn(bool value) {
-    _$isVideoOnAtom.reportWrite(value, super.isVideoOn, () {
-      super.isVideoOn = value;
     });
   }
 
@@ -131,6 +116,36 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
     });
   }
 
+  final _$isRoomEndedAtom = Atom(name: 'MeetingStoreBase.isRoomEnded');
+
+  @override
+  bool get isRoomEnded {
+    _$isRoomEndedAtom.reportRead();
+    return super.isRoomEnded;
+  }
+
+  @override
+  set isRoomEnded(bool value) {
+    _$isRoomEndedAtom.reportWrite(value, super.isRoomEnded, () {
+      super.isRoomEnded = value;
+    });
+  }
+
+  final _$eventAtom = Atom(name: 'MeetingStoreBase.event');
+
+  @override
+  String get event {
+    _$eventAtom.reportRead();
+    return super.event;
+  }
+
+  @override
+  set event(String value) {
+    _$eventAtom.reportWrite(value, super.event, () {
+      super.event = value;
+    });
+  }
+
   final _$hmsTrackChangeRequestAtom =
       Atom(name: 'MeetingStoreBase.hmsTrackChangeRequest');
 
@@ -145,6 +160,21 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
     _$hmsTrackChangeRequestAtom.reportWrite(value, super.hmsTrackChangeRequest,
         () {
       super.hmsTrackChangeRequest = value;
+    });
+  }
+
+  final _$rolesAtom = Atom(name: 'MeetingStoreBase.roles');
+
+  @override
+  List<HMSRole> get roles {
+    _$rolesAtom.reportRead();
+    return super.roles;
+  }
+
+  @override
+  set roles(List<HMSRole> value) {
+    _$rolesAtom.reportWrite(value, super.roles, () {
+      super.roles = value;
     });
   }
 
@@ -178,18 +208,18 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
     });
   }
 
-  final _$screenTrackAtom = Atom(name: 'MeetingStoreBase.screenTrack');
+  final _$localTrackAtom = Atom(name: 'MeetingStoreBase.localTrack');
 
   @override
-  HMSTrack? get screenTrack {
-    _$screenTrackAtom.reportRead();
-    return super.screenTrack;
+  HMSTrack? get localTrack {
+    _$localTrackAtom.reportRead();
+    return super.localTrack;
   }
 
   @override
-  set screenTrack(HMSTrack? value) {
-    _$screenTrackAtom.reportWrite(value, super.screenTrack, () {
-      super.screenTrack = value;
+  set localTrack(HMSTrack? value) {
+    _$localTrackAtom.reportWrite(value, super.localTrack, () {
+      super.localTrack = value;
     });
   }
 
@@ -205,6 +235,21 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
   set tracks(ObservableList<HMSTrack> value) {
     _$tracksAtom.reportWrite(value, super.tracks, () {
       super.tracks = value;
+    });
+  }
+
+  final _$audioTracksAtom = Atom(name: 'MeetingStoreBase.audioTracks');
+
+  @override
+  ObservableList<HMSTrack> get audioTracks {
+    _$audioTracksAtom.reportRead();
+    return super.audioTracks;
+  }
+
+  @override
+  set audioTracks(ObservableList<HMSTrack> value) {
+    _$audioTracksAtom.reportWrite(value, super.audioTracks, () {
+      super.audioTracks = value;
     });
   }
 
@@ -254,47 +299,81 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
     });
   }
 
-  final _$toggleAudioAsyncAction = AsyncAction('MeetingStoreBase.toggleAudio');
+  final _$peerTracksAtom = Atom(name: 'MeetingStoreBase.peerTracks');
 
   @override
-  Future<void> toggleAudio() {
-    return _$toggleAudioAsyncAction.run(() => super.toggleAudio());
+  ObservableList<PeerTrackNode> get peerTracks {
+    _$peerTracksAtom.reportRead();
+    return super.peerTracks;
   }
 
-  final _$joinMeetingAsyncAction = AsyncAction('MeetingStoreBase.joinMeeting');
-
   @override
-  Future<bool> joinMeeting() {
-    return _$joinMeetingAsyncAction.run(() => super.joinMeeting());
+  set peerTracks(ObservableList<PeerTrackNode> value) {
+    _$peerTracksAtom.reportWrite(value, super.peerTracks, () {
+      super.peerTracks = value;
+    });
   }
 
-  final _$sendMessageAsyncAction = AsyncAction('MeetingStoreBase.sendMessage');
+  final _$observableMapAtom = Atom(name: 'MeetingStoreBase.observableMap');
 
   @override
-  Future<void> sendMessage(String message) {
-    return _$sendMessageAsyncAction.run(() => super.sendMessage(message));
+  ObservableMap<String, String> get observableMap {
+    _$observableMapAtom.reportRead();
+    return super.observableMap;
+  }
+
+  @override
+  set observableMap(ObservableMap<String, String> value) {
+    _$observableMapAtom.reportWrite(value, super.observableMap, () {
+      super.observableMap = value;
+    });
+  }
+
+  final _$joinAsyncAction = AsyncAction('MeetingStoreBase.join');
+
+  @override
+  Future<bool> join(String user, String roomUrl) {
+    return _$joinAsyncAction.run(() => super.join(user, roomUrl));
+  }
+
+  final _$switchAudioAsyncAction = AsyncAction('MeetingStoreBase.switchAudio');
+
+  @override
+  Future<void> switchAudio() {
+    return _$switchAudioAsyncAction.run(() => super.switchAudio());
   }
 
   final _$MeetingStoreBaseActionController =
       ActionController(name: 'MeetingStoreBase');
 
   @override
-  void startListen() {
+  void addUpdateListener() {
     final _$actionInfo = _$MeetingStoreBaseActionController.startAction(
-        name: 'MeetingStoreBase.startListen');
+        name: 'MeetingStoreBase.addUpdateListener');
     try {
-      return super.startListen();
+      return super.addUpdateListener();
     } finally {
       _$MeetingStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void removeListener() {
+  void removeUpdateListener() {
     final _$actionInfo = _$MeetingStoreBaseActionController.startAction(
-        name: 'MeetingStoreBase.removeListener');
+        name: 'MeetingStoreBase.removeUpdateListener');
     try {
-      return super.removeListener();
+      return super.removeUpdateListener();
+    } finally {
+      _$MeetingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void sendBroadcastMessage(String message) {
+    final _$actionInfo = _$MeetingStoreBaseActionController.startAction(
+        name: 'MeetingStoreBase.sendBroadcastMessage');
+    try {
+      return super.sendBroadcastMessage(message);
     } finally {
       _$MeetingStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -345,22 +424,11 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
   }
 
   @override
-  void removeTrackWithPeerId(String peerId) {
+  void removeTrackWithPeerIdExtra(String trackId) {
     final _$actionInfo = _$MeetingStoreBaseActionController.startAction(
-        name: 'MeetingStoreBase.removeTrackWithPeerId');
+        name: 'MeetingStoreBase.removeTrackWithPeerIdExtra');
     try {
-      return super.removeTrackWithPeerId(peerId);
-    } finally {
-      _$MeetingStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void addTrack(HMSTrack track) {
-    final _$actionInfo = _$MeetingStoreBaseActionController.startAction(
-        name: 'MeetingStoreBase.addTrack');
-    try {
-      return super.addTrack(track);
+      return super.removeTrackWithPeerIdExtra(trackId);
     } finally {
       _$MeetingStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -372,17 +440,6 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
         name: 'MeetingStoreBase.onRoleUpdated');
     try {
       return super.onRoleUpdated(index, peer);
-    } finally {
-      _$MeetingStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void updateError(HMSError error) {
-    final _$actionInfo = _$MeetingStoreBaseActionController.startAction(
-        name: 'MeetingStoreBase.updateError');
-    try {
-      return super.updateError(error);
     } finally {
       _$MeetingStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -460,21 +517,26 @@ mixin _$MeetingStore on MeetingStoreBase, Store {
   String toString() {
     return '''
 isSpeakerOn: ${isSpeakerOn},
-error: ${error},
+hmsException: ${hmsException},
 roleChangeRequest: ${roleChangeRequest},
 isMeetingStarted: ${isMeetingStarted},
-isVideoOn: ${isVideoOn},
 isMicOn: ${isMicOn},
 reconnecting: ${reconnecting},
 reconnected: ${reconnected},
+isRoomEnded: ${isRoomEnded},
+event: ${event},
 hmsTrackChangeRequest: ${hmsTrackChangeRequest},
+roles: ${roles},
 peers: ${peers},
 localPeer: ${localPeer},
-screenTrack: ${screenTrack},
+localTrack: ${localTrack},
 tracks: ${tracks},
+audioTracks: ${audioTracks},
 messages: ${messages},
 trackStatus: ${trackStatus},
-audioTrackStatus: ${audioTrackStatus}
+audioTrackStatus: ${audioTrackStatus},
+peerTracks: ${peerTracks},
+observableMap: ${observableMap}
     ''';
   }
 }

@@ -1,10 +1,6 @@
-import 'package:clubhouse_clone/meeting/meeting_store.dart';
-import 'package:clubhouse_clone/models/user.dart';
 import 'package:clubhouse_clone/views/room_view.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 class UserDetailsInputView extends StatefulWidget {
   const UserDetailsInputView({Key? key}) : super(key: key);
@@ -111,25 +107,22 @@ class _UserDetailsInputViewState extends State<UserDetailsInputView> {
                     const SizedBox(height: 10),
                     ElevatedButton(
                         onPressed: () {
-                          User user = User(
-                              userName: usernameTextEditingController.text,
-                              userRole:
-                                  userRoleTextEditingController.text.isEmpty
-                                      ? 'listener'
-                                      : userRoleTextEditingController.text,
-                              userId: const Uuid().v1());
-                          const roomId = '618d48acbe6c3c0b351510e0';
+                          String roomId = userRoleTextEditingController.text
+                                      .trim()
+                                      .toLowerCase() ==
+                                  "speaker"
+                              ? 'https://zoomdemo.app.100ms.live/meeting/ayj-zgp-qcn'
+                              : 'https://zoomdemo.app.100ms.live/meeting/bjw-tji-aqc';
 
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => Provider<MeetingStore>(
-                                        create: (_) => MeetingStore(),
-                                        child: RoomView(
-                                            roomTitle: 'Room Title',
-                                            roomId: roomId,
-                                            user: user),
-                                      )));
+                                builder: (_) => RoomView(
+                                    roomTitle: 'Room Title',
+                                    roomId: roomId,
+                                    username:
+                                        usernameTextEditingController.text),
+                              ));
                         },
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(

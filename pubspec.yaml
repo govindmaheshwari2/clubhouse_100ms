@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  hmssdk_flutter: ^0.4.0
+  hmssdk_flutter: ^0.7.0
   http: ^0.13.4
   uuid: ^3.0.5
   mobx: ^2.0.5

@@ -26,6 +26,7 @@ class _ChatViewState extends State<ChatView> {
 
   @override
   Widget build(BuildContext context) {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm a');
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -83,8 +84,8 @@ class _ChatViewState extends State<ChatView> {
                                     ),
                                   ),
                                   Text(
-                                    _meetingStore.messages[index].time
-                                        .toString(),
+                                    formatter.format(
+                                        _meetingStore.messages[index].time),
                                     style: const TextStyle(
                                         fontSize: 10.0,
                                         color: Colors.black,
@@ -143,24 +144,8 @@ class _ChatViewState extends State<ChatView> {
                       onTap: () {
                         String message = messageTextController.text;
                         if (message.isEmpty) return;
-
-                        DateTime currentTime = DateTime.now();
-                        final DateFormat formatter =
-                            DateFormat('yyyy-MM-dd hh:mm a');
-
                         if (valueChoose == "Everyone") {
-                          _meetingStore.sendMessage(message);
-                          _meetingStore.addMessage(HMSMessage(
-                            sender: _meetingStore.localPeer!,
-                            message: message,
-                            type: "chat",
-                            time: formatter.format(currentTime),
-                            hmsMessageRecipient: HMSMessageRecipient(
-                                recipientPeer: null,
-                                recipientRoles: null,
-                                hmsMessageRecipientType:
-                                    HMSMessageRecipientType.BROADCAST),
-                          ));
+                          _meetingStore.sendBroadcastMessage(message);
                         }
                         messageTextController.clear();
                       },
