@@ -33,7 +33,7 @@ abstract class MeetingStoreBase extends ChangeNotifier
 
   @observable
   bool isMeetingStarted = false;
-   @observable
+  @observable
   bool isMicOn = true;
 
   @observable
@@ -102,9 +102,9 @@ abstract class MeetingStoreBase extends ChangeNotifier
         await TokenService().getToken(user: user, room: roomUrl);
     if (token == null) return false;
     HMSConfig config = HMSConfig(
-        authToken: token[0]!,
-        userName: user,
-        endPoint: token[1] == "true" ? "" : "https://qa-init.100ms.live/init");
+      authToken: token[0]!,
+      userName: user,
+    );
 
     await _hmssdkInteractor.join(config: config);
     isMeetingStarted = true;
@@ -220,8 +220,7 @@ abstract class MeetingStoreBase extends ChangeNotifier
   }
 
   @override
-  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
-  }
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {}
 
   @override
   void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {

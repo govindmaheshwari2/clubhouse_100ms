@@ -119,7 +119,7 @@ class _UserDetailsInputViewState extends State<UserDetailsInputView> {
                               MaterialPageRoute(
                                 builder: (_) => RoomView(
                                     roomTitle: 'Room Title',
-                                    roomId: roomId,
+                                    roomLink: roomId,
                                     username:
                                         usernameTextEditingController.text),
                               ));

@@ -5,11 +5,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class RoomView extends StatefulWidget {
   final String roomTitle;
-  final String roomId;
+  final String roomLink;
   final String username;
   const RoomView(
       {required this.roomTitle,
-      required this.roomId,
+      required this.roomLink,
       required this.username,
       Key? key})
       : super(key: key);
@@ -31,7 +31,7 @@ class _RoomViewState extends State<RoomView> {
   }
 
   initMeeting() async {
-    bool ans = await _meetingStore.join(widget.username, widget.roomId);
+    bool ans = await _meetingStore.join(widget.username, widget.roomLink);
     if (!ans) {
       const SnackBar(content: Text("Unable to Join"));
       Navigator.of(context).pop();
