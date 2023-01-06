@@ -177,7 +177,7 @@ abstract class MeetingStoreBase extends ChangeNotifier
 
   @action
   void addMessage(HMSMessage message) {
-    this.messages.add(message);
+    messages.add(message);
   }
 
   @action
@@ -338,8 +338,9 @@ abstract class MeetingStoreBase extends ChangeNotifier
   @override
   void onChangeTrackStateRequest(
       {required HMSTrackChangeRequest hmsTrackChangeRequest}) {
-    if (!hmsTrackChangeRequest.mute)
+    if (!hmsTrackChangeRequest.mute) {
       addTrackChangeRequestInstance(hmsTrackChangeRequest);
+    }
   }
 
   void changeTracks(HMSTrackChangeRequest hmsTrackChangeRequest) {
@@ -451,7 +452,7 @@ abstract class MeetingStoreBase extends ChangeNotifier
   }
 
   void endRoom(bool lock, String? reason) {
-    _hmssdkInteractor.endRoom(lock, reason == null ? "" : reason, this);
+    _hmssdkInteractor.endRoom(lock, reason ?? "", this);
   }
 
   void removePeerFromRoom(HMSPeer peer) {
@@ -535,7 +536,7 @@ abstract class MeetingStoreBase extends ChangeNotifier
         // TODO: Handle this case.
         break;
       case HMSActionResultListenerMethod.changeTrackStateForRole:
-        this.event = arguments!['roles'] == null
+        event = arguments!['roles'] == null
             ? "Successfully Muted All"
             : "Successfully Muted Role";
         break;
@@ -548,7 +549,7 @@ abstract class MeetingStoreBase extends ChangeNotifier
       case HMSActionResultListenerMethod.unknown:
         break;
       case HMSActionResultListenerMethod.changeName:
-        this.event = "Name Changed to ${localPeer!.name}";
+        event = "Name Changed to ${localPeer!.name}";
         break;
       case HMSActionResultListenerMethod.sendBroadcastMessage:
         var message = HMSMessage(
@@ -632,7 +633,7 @@ abstract class MeetingStoreBase extends ChangeNotifier
         // TODO: Handle this case.
         break;
       case HMSActionResultListenerMethod.changeTrackStateForRole:
-        this.event = "Failed to Mute";
+        event = "Failed to Mute";
         break;
       case HMSActionResultListenerMethod.startRtmpOrRecording:
         break;
